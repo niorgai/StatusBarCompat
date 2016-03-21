@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">StatusBarCompat</string>
+
+    <string name="title_activity_margin_compat">MarginCompatActivity</string>
+    <string name="title_activity_parent_compat">ParentCompatActivity</string>
+    <string name="title_activity_content_compat">ContentCompatActivity</string>
+    <string name="title_activity_content_compat_translucent">ContentCompatTranslucentActivity</string>
+</resources>

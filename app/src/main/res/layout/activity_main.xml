@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <Button
+        android:id="@+id/margin"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:text="Compat with margin" />
+
+    <Button
+        android:id="@+id/parent"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:text="Compat with content's parent fitsSystemWindows" />
+
+    <Button
+        android:id="@+id/content_not_translucent"
+        android:layout_margin="20dp"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Compat with content fitsSystemWindows" />
+
+    <Button
+        android:id="@+id/content_translucent"
+        android:layout_margin="20dp"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Compat with content fitsSystemWindows \n Translate Status Bar" />
+</LinearLayout>
