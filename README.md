@@ -2,6 +2,8 @@
 
 **Only work for SDK >= 19.**
 
+[Demo Download](http://fir.im/StatusBarCompat)
+
 SDK|KITKAT(19)|LOLLIPOP(21)
 ---|---|---
  |<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_19.gif" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_21.gif" width="320x">
