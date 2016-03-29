@@ -1,4 +1,4 @@
-package qiu.statusbarcompat.compat;
+package qiu.niorgai;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,8 +12,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
- * setStatusBarColor with margin
- * Created by qiu on 3/20/16.
+ * Utils for status bar
+ * Created by qiu on 3/29/16.
  */
 public class StatusBarCompat {
 
@@ -114,7 +114,7 @@ public class StatusBarCompat {
         setStatusBarColor(activity, COLOR_DEFAULT_PINK);
     }
 
-    //获取状态栏的高度
+    //Get status bar height
     public static int getStatusBarHeight(Context context) {
         int result = 0;
         int resId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");

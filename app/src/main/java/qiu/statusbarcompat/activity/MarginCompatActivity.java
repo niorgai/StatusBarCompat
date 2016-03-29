@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
-import qiu.statusbarcompat.compat.StatusBarCompat;
 
 public class MarginCompatActivity extends AppCompatActivity {
 
