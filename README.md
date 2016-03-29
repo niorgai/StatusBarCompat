@@ -4,6 +4,23 @@
 
 [Demo Download](http://fir.im/StatusBarCompat)
 
+# Usage
+
+Add it in your root build.gradle at the end of repositories:
+
+	allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+	 
+Add the dependency
+
+	dependencies {
+	        compile 'com.github.niorgai:StatusBarCompat:1.0.0'
+	}
+
 SDK|KITKAT(19)|LOLLIPOP(21)
 ---|---|---
  |<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_19.gif" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_21.gif" width="320x">
