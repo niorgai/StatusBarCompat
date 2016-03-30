@@ -1,4 +1,5 @@
 # StatusBarCompat
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-StatusBarCompat-green.svg?style=true)](https://android-arsenal.com/details/1/3349)
 
 **Only work for SDK >= 19.**
 
@@ -88,7 +89,6 @@ This is a utils for status bar, And you **do not need to** change your `style.xm
 
 # 更多
 在我的博客[Android-transulcent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/)中可以查看更多细节.
-
 
 # License
 	
