@@ -19,7 +19,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 
 	dependencies {
-	        compile 'com.github.niorgai:StatusBarCompat:1.0.0'
+	        compile 'com.github.niorgai:StatusBarCompat:1.0.1'
 	}
 
 SDK|KITKAT(19)|LOLLIPOP(21)
@@ -38,9 +38,13 @@ This is a utils for status bar, And you **do not need to** change your `style.xm
 	//set color for status bar
 	StatusBarCompat.setStatusBarColor(Activity activity)
 	StatusBarCompat.setStatusBarColor(Activity activity, int color)
+	//add alpha to color
+	StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
 	
 	//translucent status bar
 	StatusBarCompat.translucentStatusBar(activity);
+	//should hide status bar background (default black background) when SDK >= 21
+	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
 	
 # How to use
 
@@ -71,9 +75,13 @@ This is a utils for status bar, And you **do not need to** change your `style.xm
 	//设置状态栏的颜色
 	StatusBarCompat.setStatusBarColor(Activity activity)
 	StatusBarCompat.setStatusBarColor(Activity activity, int color)
+	//为状态栏颜色设置透明度
+	StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
 	
 	//透明状态栏
 	StatusBarCompat.translucentStatusBar(activity);
+	//当SDK >= 21时, 是否需要隐藏状态栏的背景色(默认的黑色背景)
+	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
 	
 # 怎么使用
 1. 在 `setContentView` 方法调用后再设置.

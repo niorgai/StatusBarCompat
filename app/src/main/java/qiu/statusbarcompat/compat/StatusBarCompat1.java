@@ -16,7 +16,7 @@ import android.view.WindowManager;
  */
 public class StatusBarCompat1 {
 
-    public static final String TAG = StatusBarCompat.class.getName();
+    public static final String TAG = StatusBarCompat1.class.getName();
 
     public static final int COLOR_DEFAULT_PINK = Color.parseColor("#FFEF4968");
     public static final int COLOR_DEFAULT_WHITE = Color.parseColor("#FFFFFFFF");

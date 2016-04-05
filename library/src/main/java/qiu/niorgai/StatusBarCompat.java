@@ -22,6 +22,19 @@ public class StatusBarCompat {
     public static final int COLOR_DEFAULT_WHITE = Color.parseColor("#FFFFFFFF");
     public static final int COLOR_DEFAULT_PINK = Color.parseColor("#FFEF4968");
 
+    public static void setStatusBarColor(Activity activity) {
+        setStatusBarColor(activity, COLOR_DEFAULT_PINK);
+    }
+
+    /**
+     * set statusBarColor
+     * @param statusColor color
+     * @param alpha 0 - 255
+     */
+    public static void setStatusBarColor(Activity activity, int statusColor, int alpha) {
+        setStatusBarColor(activity, calculateStatusBarColor(statusColor, alpha));
+    }
+
     public static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
         ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
@@ -71,8 +84,15 @@ public class StatusBarCompat {
         }
     }
 
-
     public static void translucentStatusBar(Activity activity) {
+        translucentStatusBar(activity, false);
+    }
+
+    /**
+     * change to full screen mode
+     * @param hideStatusBarBackground hide status bar Background when SDK > 21, true if hide it
+     */
+    public static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
         Window window = activity.getWindow();
         ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
 
@@ -90,6 +110,23 @@ public class StatusBarCompat {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //After LOLLIPOP just set LayoutParams.
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                if (hideStatusBarBackground) {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.setStatusBarColor(Color.parseColor("#00000000"));
+                } else {
+                    window.setStatusBarColor(Color.parseColor("#55000000"));
+                }
+                //must call requestLayout, otherwise it will have space in screen bottom
+                if (mChildView != null) {
+                    final View finalMChildView = mChildView;
+                    window.getDecorView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            finalMChildView.requestLayout();
+
+                        }
+                    });
+                }
             } else {
                 if (mChildView != null && mChildView.getLayoutParams() != null && mChildView.getLayoutParams().height == statusBarHeight) {
                     //Before LOLLIPOP need remove fake status bar view.
@@ -105,13 +142,7 @@ public class StatusBarCompat {
                     }
                 }
             }
-
         }
-    }
-
-
-    public static void setStatusBarColor(Activity activity) {
-        setStatusBarColor(activity, COLOR_DEFAULT_PINK);
     }
 
     //Get status bar height
@@ -122,5 +153,17 @@ public class StatusBarCompat {
             result = context.getResources().getDimensionPixelOffset(resId);
         }
         return result;
+    }
+
+    //Get alpha color
+    private static int calculateStatusBarColor(int color, int alpha) {
+        float a = 1 - alpha / 255f;
+        int red = color >> 16 & 0xff;
+        int green = color >> 8 & 0xff;
+        int blue = color & 0xff;
+        red = (int) (red * a + 0.5);
+        green = (int) (green * a + 0.5);
+        blue = (int) (blue * a + 0.5);
+        return 0xff << 24 | red << 16 | green << 8 | blue;
     }
 }
