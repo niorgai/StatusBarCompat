@@ -118,14 +118,7 @@ public class StatusBarCompat {
                 }
                 //must call requestLayout, otherwise it will have space in screen bottom
                 if (mChildView != null) {
-                    final View finalMChildView = mChildView;
-                    window.getDecorView().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            finalMChildView.requestLayout();
-
-                        }
-                    });
+                    ViewCompat.requestApplyInsets(mChildView);
                 }
             } else {
                 if (mChildView != null && mChildView.getLayoutParams() != null && mChildView.getLayoutParams().height == statusBarHeight) {
