@@ -51,12 +51,19 @@ This is a utils for status bar, And you **do not need to** change your `style.xm
 1. Use it after call `setContentView` 
 2. If use FullScreen Activity, must call `StatusBarCompat.translucentStatusBar(activity);`
 	
-# Demo Gif:
+# About Demo:
 1. Both FloatingActionButton can toggle between `setStatusBarColor` and `translucentStatusBar`.
 1. First Button will jump to an Activity which is use `StatusBarCompat`, It work perfect.
 2. Second Button will jump to an Activity which is use `StatusBarCompat1`, It has a black line below statusBar when you call `setStatusBarColor` In KitKat.
 3. Third Button will jump to an Activity which is use `StatusBarCompat2` and call `setStatusBarColor`. But it will not work if you call `translucentStatusBar` after In KitKat.
 4. Fourth Button will jump to an Activity which is use `StatusBarCompat2` and call `translucentStatusBar`. But it will not work if you call `setStatusBarColor` after In KitKat.
+
+## Issues:
+These porblem only show in KIKKAT:
+
+1. If work with `TabActivity`, It will show a black line in contentView, so you can call `StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)` and the suggest alpha is 112.
+2. If first view is `DrawerLayout`, let its child view set `fitsSystemWindow` to false.
+
 
 # Link:
 1. I had show three type to set statusBar, only the class `StatusBarCompat` is suggested, But you can see their different in my blog [Android-transulcent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/).
@@ -94,6 +101,12 @@ This is a utils for status bar, And you **do not need to** change your `style.xm
 3. 第三个按钮跳转的 Activity 使用  `StatusBarCompat2` 并且调用 `setStatusBarColor`. 但是在 Android 4.4-5.0 , 如果接下来调用 `translucentStatusBar` 会无效.
 4. 第四个按钮跳转的 Activity 使用  `StatusBarCompat2` 并且调用 `translucentStatusBar`. 但是在 Android 4.4-5.0 , 如果接下来调用 `setStatusBarColor` 会无效.
 5. 这里提供了 `StatusBarCompat` , `StatusBarCompat1` , `StatusBarCompat2` 类,推荐使用`StatusBarCompat`类, 其他两个类的实现方式都有一些小问题.
+
+## 已知问题
+这些问题仅仅出现在 4.4 上
+
+1. 如果用在 TabActivity 上, 会有一条黑线在状态栏下面, 推荐使用 `StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)` 方法, 推荐的透明值为 112.
+2. 如果 layout 中第一个 View 为 DrawerLayout, 那么它的子 View 的 fitsSystemWindow 需要设置为 false.
 
 # 更多
 在我的博客[Android-transulcent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/)中可以查看更多细节.
