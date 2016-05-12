@@ -19,7 +19,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 
 	dependencies {
-	        compile 'com.github.niorgai:StatusBarCompat:1.0.1'
+	        compile 'com.github.niorgai:StatusBarCompat:1.1.0'
 	}
 
 SDK|KITKAT(19)|LOLLIPOP(21)
@@ -34,9 +34,9 @@ TranslucentStatusBar|SetStatusBarColor
 ---
 
 This is a utils for status bar, And you **do not need to** change your `style.xml` file.
+The most feature is **you can toggle `setStatusBarColor` and `translucentStatusBar` without recreate activity**.
 
 	//set color for status bar
-	StatusBarCompat.setStatusBarColor(Activity activity)
 	StatusBarCompat.setStatusBarColor(Activity activity, int color)
 	//add alpha to color
 	StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
@@ -77,7 +77,7 @@ These porblem only show in KIKKAT:
 ---|---
 <img src="http://7sbqys.com1.z0.glb.clouddn.com/fullScreen.png" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/Toolbar.png" width="320x">)
  
-这是一个为了兼容处理状态栏的工具类,可以不需要设置不同的`style.xml`文件,提供以下 API :
+这是一个为了兼容处理状态栏的工具类,可以不需要设置不同的`style.xml`文件,最重要的特性就是可以在**不重启 Activity 的情况下切换 `setStatusBarColor` 和 `translucentStatusBar` **. 提供以下 API :
 
 	//设置状态栏的颜色
 	StatusBarCompat.setStatusBarColor(Activity activity)
