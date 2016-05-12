@@ -1,5 +1,6 @@
 package qiu.statusbarcompat.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -37,11 +38,13 @@ public class MarginCompatActivity extends AppCompatActivity {
 
     protected void toggleTranslucent() {
         if (isTranslucent) {
+            StatusBarCompat.translucentStatusBar(this, true);
             StatusBarCompat.translucentStatusBar(this);
-            StatusBarCompat.translucentStatusBar(this);
+//            StatusBarUtil.setTranslucent(this);
         } else {
-            StatusBarCompat.setStatusBarColor(this, StatusBarCompat.COLOR_DEFAULT_WHITE);
-            StatusBarCompat.setStatusBarColor(this);
+            StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF4F4F"));
+            StatusBarCompat.setStatusBarColor(this, Color.parseColor("#FF4F4F"), 112);
+//            StatusBarUtil.setColor(this, StatusBarCompat.COLOR_DEFAULT_PINK, 0);
         }
     }
 

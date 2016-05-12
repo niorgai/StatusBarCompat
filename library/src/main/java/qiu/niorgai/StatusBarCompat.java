@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,14 +18,9 @@ import android.widget.FrameLayout;
  */
 public class StatusBarCompat {
 
-    public static final String TAG = StatusBarCompat.class.getName();
+    private static final int COLOR_TRANSLUCENT = Color.parseColor("#00000000");
 
-    public static final int COLOR_DEFAULT_WHITE = Color.parseColor("#FFFFFFFF");
-    public static final int COLOR_DEFAULT_PINK = Color.parseColor("#FFEF4968");
-
-    public static void setStatusBarColor(Activity activity) {
-        setStatusBarColor(activity, COLOR_DEFAULT_PINK);
-    }
+    public static final int DEFAULT_COLOR_ALPHA = 112;
 
     /**
      * set statusBarColor
@@ -54,32 +50,32 @@ public class StatusBarCompat {
                     ViewCompat.setFitsSystemWindows(mChildView, true);
                 }
             } else {
-                int statusBarHeight = getStatusBarHeight(activity);
-
-                View mChildView = mContentView.getChildAt(0);
-                if (mChildView != null) {
-                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mChildView.getLayoutParams();
-                    //if margin top has already set, just skip.
-                    if (lp != null && lp.topMargin < statusBarHeight && lp.height != statusBarHeight) {
-                        //do not use fitsSystemWindows
-                        ViewCompat.setFitsSystemWindows(mChildView, false);
-                        //add margin to content
-                        lp.topMargin += statusBarHeight;
-                        mChildView.setLayoutParams(lp);
+                ViewGroup mDecorView = (ViewGroup) window.getDecorView();
+                if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Boolean && (Boolean)mDecorView.getTag()) {
+                    //if has add fake status bar view
+                    View mStatusBarView = mDecorView.getChildAt(0);
+                    if (mStatusBarView != null) {
+                        mStatusBarView.setBackgroundColor(statusColor);
                     }
+                } else {
+                    int statusBarHeight = getStatusBarHeight(activity);
+                    //add margin
+                    View mContentChild = mContentView.getChildAt(0);
+                    if (mContentChild != null) {
+                        ViewCompat.setFitsSystemWindows(mContentChild, false);
+                        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mContentChild.getLayoutParams();
+                        lp.topMargin += statusBarHeight;
+                        mContentChild.setLayoutParams(lp);
+                    }
+                    //add fake status bar view
+                    View mStatusBarView = new View(activity);
+                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
+                    layoutParams.gravity = Gravity.TOP;
+                    mStatusBarView.setLayoutParams(layoutParams);
+                    mStatusBarView.setBackgroundColor(statusColor);
+                    mDecorView.addView(mStatusBarView, 0);
+                    mDecorView.setTag(true);
                 }
-
-                //Before LOLLIPOP create a fake status bar View.
-                View statusBarView = mContentView.getChildAt(0);
-                if (statusBarView != null && statusBarView.getLayoutParams() != null && statusBarView.getLayoutParams().height == statusBarHeight) {
-                    //if fake status bar view exist, we can setBackgroundColor and return.
-                    statusBarView.setBackgroundColor(statusColor);
-                    return;
-                }
-                statusBarView = new View(activity);
-                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
-                statusBarView.setBackgroundColor(statusColor);
-                mContentView.addView(statusBarView, 0, lp);
             }
         }
     }
@@ -90,7 +86,7 @@ public class StatusBarCompat {
 
     /**
      * change to full screen mode
-     * @param hideStatusBarBackground hide status bar Background when SDK > 21, true if hide it
+     * @param hideStatusBarBackground hide status bar alpha Background when SDK > 21, true if hide it
      */
     public static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
         Window window = activity.getWindow();
@@ -112,27 +108,30 @@ public class StatusBarCompat {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 if (hideStatusBarBackground) {
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    window.setStatusBarColor(Color.parseColor("#00000000"));
+                    window.setStatusBarColor(COLOR_TRANSLUCENT);
                 } else {
-                    window.setStatusBarColor(Color.parseColor("#55000000"));
+                    window.setStatusBarColor(calculateStatusBarColor(COLOR_TRANSLUCENT, DEFAULT_COLOR_ALPHA));
                 }
-                //must call requestLayout, otherwise it will have space in screen bottom
+                //must call requestApplyInsets, otherwise it will have space in screen bottom
                 if (mChildView != null) {
                     ViewCompat.requestApplyInsets(mChildView);
                 }
             } else {
-                if (mChildView != null && mChildView.getLayoutParams() != null && mChildView.getLayoutParams().height == statusBarHeight) {
-                    //Before LOLLIPOP need remove fake status bar view.
+                ViewGroup mDecorView = (ViewGroup) window.getDecorView();
+                if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Boolean && (Boolean)mDecorView.getTag()) {
+                    mChildView = mDecorView.getChildAt(0);
+                    //remove fake status bar view.
                     mContentView.removeView(mChildView);
                     mChildView = mContentView.getChildAt(0);
-                }
-                if (mChildView != null) {
-                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mChildView.getLayoutParams();
-                    //cancel the margin top
-                    if (lp != null && lp.topMargin >= statusBarHeight) {
-                        lp.topMargin -= statusBarHeight;
-                        mChildView.setLayoutParams(lp);
+                    if (mChildView != null) {
+                        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mChildView.getLayoutParams();
+                        //cancel the margin top
+                        if (lp != null && lp.topMargin >= statusBarHeight) {
+                            lp.topMargin -= statusBarHeight;
+                            mChildView.setLayoutParams(lp);
+                        }
                     }
+                    mDecorView.setTag(false);
                 }
             }
         }
