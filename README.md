@@ -8,20 +8,20 @@
 # Usage
 
 Add it in your root build.gradle at the end of repositories:
-
-	allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
+```groovy
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
 	}
-	 
+}
+```
 Add the dependency
-
-	dependencies {
-	        compile 'com.github.niorgai:StatusBarCompat:1.1.0'
-	}
-
+```groovy
+dependencies {
+        compile 'com.github.niorgai:StatusBarCompat:1.1.0'
+}
+```
 SDK|KITKAT(19)|LOLLIPOP(21)
 ---|---|---
  |<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_19.gif" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_21.gif" width="320x">
@@ -35,17 +35,17 @@ TranslucentStatusBar|SetStatusBarColor
 
 This is a utils for status bar, And you **do not need to** change your `style.xml` file.
 The most feature is **you can toggle `setStatusBarColor` and `translucentStatusBar` without recreate activity**.
+```java
+//set color for status bar
+StatusBarCompat.setStatusBarColor(Activity activity, int color)
+//add alpha to color
+StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
 
-	//set color for status bar
-	StatusBarCompat.setStatusBarColor(Activity activity, int color)
-	//add alpha to color
-	StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
-	
-	//translucent status bar
-	StatusBarCompat.translucentStatusBar(activity);
-	//should hide status bar background (default black background) when SDK >= 21
-	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
-	
+//translucent status bar
+StatusBarCompat.translucentStatusBar(activity);
+//should hide status bar background (default black background) when SDK >= 21
+StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
+```	
 # How to use
 
 1. Use it after call `setContentView` 
@@ -78,18 +78,18 @@ These porblem only show in KIKKAT:
 <img src="http://7sbqys.com1.z0.glb.clouddn.com/fullScreen.png" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/Toolbar.png" width="320x">)
  
 这是一个为了兼容处理状态栏的工具类,可以不需要设置不同的`style.xml`文件,最重要的特性就是可以在**不重启 Activity 的情况下切换 `setStatusBarColor` 和 `translucentStatusBar` **. 提供以下 API :
+```java
+//设置状态栏的颜色
+StatusBarCompat.setStatusBarColor(Activity activity)
+StatusBarCompat.setStatusBarColor(Activity activity, int color)
+//为状态栏颜色设置透明度
+StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
 
-	//设置状态栏的颜色
-	StatusBarCompat.setStatusBarColor(Activity activity)
-	StatusBarCompat.setStatusBarColor(Activity activity, int color)
-	//为状态栏颜色设置透明度
-	StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
-	
-	//透明状态栏
-	StatusBarCompat.translucentStatusBar(activity);
-	//当SDK >= 21时, 是否需要隐藏状态栏的背景色(默认的黑色背景)
-	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
-	
+//透明状态栏
+StatusBarCompat.translucentStatusBar(activity);
+//当SDK >= 21时, 是否需要隐藏状态栏的背景色(默认的黑色背景)
+StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
+```	
 # 怎么使用
 1. 在 `setContentView` 方法调用后再设置.
 2. 如果使用了全屏 Activity ,记得调用`StatusBarCompat.translucentStatusBar(activity);`
