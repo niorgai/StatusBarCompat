@@ -6,39 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <Button
-        android:id="@+id/margin"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_weight="1"
-        android:textAllCaps="false"
-        android:text="Compat with margin" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
-    <Button
-        android:id="@+id/parent"
-        android:layout_margin="20dp"
+    <RadioGroup
+        android:id="@+id/group"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textAllCaps="false"
-        android:text="Compat with content's parent fitsSystemWindows" />
+        android:layout_height="50dp">
+        <RadioButton
+            android:id="@+id/common"
+            android:text="Common"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/content_not_translucent"
-        android:layout_margin="20dp"
-        android:textAllCaps="false"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Compat with content fitsSystemWindows" />
+        <RadioButton
+            android:id="@+id/coordinator"
+            android:text="Coordinator"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/content_translucent"
-        android:layout_margin="20dp"
-        android:textAllCaps="false"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="Compat with content fitsSystemWindows \n Translate Status Bar" />
+        <RadioButton
+            android:id="@+id/collapsing_toolbar"
+            android:text="CollapsingToolbar"
+            android:button="@null"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </RadioGroup>
 </LinearLayout>

@@ -2,7 +2,6 @@ package qiu.niorgai;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.view.Gravity;
@@ -18,10 +17,6 @@ import android.widget.FrameLayout;
  */
 public class StatusBarCompat {
 
-    private static final int COLOR_TRANSLUCENT = Color.parseColor("#00000000");
-
-    public static final int DEFAULT_COLOR_ALPHA = 112;
-
     /**
      * set statusBarColor
      * @param statusColor color
@@ -33,7 +28,7 @@ public class StatusBarCompat {
 
     public static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
-        ViewGroup mContentView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //First translucent status bar.
@@ -48,6 +43,7 @@ public class StatusBarCompat {
                 View mChildView = mContentView.getChildAt(0);
                 if (mChildView != null) {
                     ViewCompat.setFitsSystemWindows(mChildView, true);
+                    ViewCompat.requestApplyInsets(mChildView);
                 }
             } else {
                 ViewGroup mDecorView = (ViewGroup) window.getDecorView();
@@ -85,6 +81,7 @@ public class StatusBarCompat {
     }
 
     /**
+     * @deprecated use translucentStatusBar instead
      * change to full screen mode
      * @param hideStatusBarBackground hide status bar alpha Background when SDK > 21, true if hide it
      */
@@ -99,24 +96,15 @@ public class StatusBarCompat {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int statusBarHeight = getStatusBarHeight(activity);
-
             //First translucent status bar.
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //After LOLLIPOP just set LayoutParams.
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                if (hideStatusBarBackground) {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    window.setStatusBarColor(COLOR_TRANSLUCENT);
-                } else {
-                    window.setStatusBarColor(calculateStatusBarColor(COLOR_TRANSLUCENT, DEFAULT_COLOR_ALPHA));
-                }
                 //must call requestApplyInsets, otherwise it will have space in screen bottom
                 if (mChildView != null) {
                     ViewCompat.requestApplyInsets(mChildView);
                 }
             } else {
+                int statusBarHeight = getStatusBarHeight(activity);
                 ViewGroup mDecorView = (ViewGroup) window.getDecorView();
                 if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Boolean && (Boolean)mDecorView.getTag()) {
                     mChildView = mDecorView.getChildAt(0);
@@ -146,6 +134,64 @@ public class StatusBarCompat {
         }
         return result;
     }
+
+    public static void setStatusBarColorWithCollapsingToolbar(Activity activity, int statusColor) {
+        Window window = activity.getWindow();
+        ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                //After LOLLIPOP not translucent status bar
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                //Then call setStatusBarColor.
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(statusColor);
+                //set child View not fill the system window
+                View mChildView = mContentView.getChildAt(0);
+                if (mChildView != null) {
+                    ViewCompat.setFitsSystemWindows(mChildView, true);
+                    ViewCompat.requestApplyInsets(mChildView);
+                }
+            } else {
+                //First translucent status bar.
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+                int statusBarHeight = getStatusBarHeight(activity);
+                View mContentChild = mContentView.getChildAt(0);
+
+                ViewGroup mDecorView = (ViewGroup) window.getDecorView();
+                if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Boolean && (Boolean)mDecorView.getTag()) {
+                    //if has add fake status bar view
+                    View mStatusBarView = mDecorView.getChildAt(0);
+                    if (mStatusBarView != null) {
+                        mStatusBarView.setBackgroundColor(statusColor);
+                    }
+                    //remove margin if exist
+                    if (mContentChild != null && mContentChild.getTag() == null) {
+                        ViewCompat.setFitsSystemWindows(mContentChild, true);
+                        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mContentChild.getLayoutParams();
+                        lp.topMargin -= statusBarHeight;
+                        mContentChild.setLayoutParams(lp);
+                        mContentChild.setTag(true);
+                    }
+                } else {
+                    //add margin
+                    if (mContentChild != null) {
+                        ViewCompat.setFitsSystemWindows(mContentChild, true);
+                    }
+                    //add fake status bar view
+                    final View mStatusBarView = new View(activity);
+                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
+                    layoutParams.gravity = Gravity.TOP;
+                    mStatusBarView.setLayoutParams(layoutParams);
+                    mStatusBarView.setBackgroundColor(statusColor);
+                    mDecorView.addView(mStatusBarView, 0);
+                    mDecorView.setTag(true);
+                }
+            }
+        }
+    }
+
 
     //Get alpha color
     private static int calculateStatusBarColor(int color, int alpha) {

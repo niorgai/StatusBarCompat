@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="qiu.statusbarcompat">
+          package="qiu.statusbarcompat">
 
     <application
         android:allowBackup="true"
@@ -10,27 +10,13 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.MarginCompatActivity"
-            android:label="@string/title_activity_margin_compat"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.ParentCompatActivity"
-            android:label="@string/title_activity_parent_compat"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.ContentCompatNotTranslucentActivity"
-            android:label="@string/title_activity_content_compat"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.ContentCompatTranslucentActivity"
-            android:label="@string/title_activity_content_compat_translucent"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".fragment.CommonFragment">
+        </activity>
     </application>
 
 </manifest>
