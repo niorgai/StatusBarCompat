@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import java.util.HashMap;
 
 import qiu.statusbarcompat.R;
+import qiu.statusbarcompat.fragment.CollapsingToolbarFragment;
 import qiu.statusbarcompat.fragment.CommonFragment;
 import qiu.statusbarcompat.fragment.CoordinatorFragment;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
         fragments.put(PAGE_COMMON, new CommonFragment());
         fragments.put(PAGE_COORDINATOR, new CoordinatorFragment());
-//        fragments.put(PAGE_COLLAPSING_TOOLBAR, new CollapsingToolbarFragment());
+        fragments.put(PAGE_COLLAPSING_TOOLBAR, new CollapsingToolbarFragment());
 
         mCommon = (RadioButton) findViewById(R.id.common);
         mCommon.setOnCheckedChangeListener(this);

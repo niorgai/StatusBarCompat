@@ -9,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.activity.MainActivity;
-import qiu.statusbarcompat.compat.StatusBarCompat1;
 
 /**
  * Created by qiu on 7/27/16.
  */
 public class CollapsingToolbarFragment extends Fragment {
-
-    private boolean isTranslucent = false;
 
     public CollapsingToolbarFragment() {
 
@@ -33,23 +31,17 @@ public class CollapsingToolbarFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setHasOptionsMenu(true);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        View toggle = view.findViewById(R.id.toggle);
-        toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isTranslucent) {
-                    StatusBarCompat1.setStatusBarColorWithCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
-                } else {
-                    StatusBarCompat1.translucentStatusBar(getActivity());
-                }
-                isTranslucent = !isTranslucent;
-            }
-        });
+        StatusBarCompat.setStatusBarColorWithCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
+    }
 
-        toggle.callOnClick();
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarCompat.setStatusBarColorWithCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
+        }
     }
 }

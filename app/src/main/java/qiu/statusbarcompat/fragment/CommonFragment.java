@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
+import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.activity.MainActivity;
-import qiu.statusbarcompat.compat.StatusBarCompat1;
 
 public class CommonFragment extends Fragment {
 
@@ -44,7 +44,7 @@ public class CommonFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (!isTranslucent) {
-                    StatusBarCompat1.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR, progress);
+                    StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR, progress);
                 }
             }
 
@@ -63,12 +63,12 @@ public class CommonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!isTranslucent) {
-                    StatusBarCompat1.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
+                    StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
                     mSeekBar.setVisibility(View.VISIBLE);
                     mImage.setVisibility(View.GONE);
                     mText.setVisibility(View.VISIBLE);
                 } else {
-                    StatusBarCompat1.translucentStatusBar(getActivity());
+                    StatusBarCompat.translucentStatusBar(getActivity());
                     mSeekBar.setVisibility(View.GONE);
                     mImage.setVisibility(View.VISIBLE);
                     mText.setVisibility(View.GONE);

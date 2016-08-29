@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.activity.MainActivity;
-import qiu.statusbarcompat.compat.StatusBarCompat1;
 
 /**
  *
@@ -37,10 +37,10 @@ public class CoordinatorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!isTranslucent) {
-                    StatusBarCompat1.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
-                    StatusBarCompat1.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
+                    StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
+                    StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
                 } else {
-                    StatusBarCompat1.translucentStatusBar(getActivity());
+                    StatusBarCompat.translucentStatusBar(getActivity());
                 }
                 isTranslucent = !isTranslucent;
             }
