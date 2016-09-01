@@ -48,4 +48,12 @@ public class CoordinatorFragment extends Fragment {
 
         mToggle.callOnClick();
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mToggle.callOnClick();
+        }
+    }
 }

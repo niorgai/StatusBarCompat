@@ -18,7 +18,7 @@ import qiu.statusbarcompat.fragment.CoordinatorFragment;
 
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
-    public static final int DEFAULT_COLOR = Color.parseColor("#FFBDBDBD");
+    public static final int DEFAULT_COLOR = Color.parseColor("#319bd2");
 
     public static final int PAGE_COMMON = 0;
     public static final int PAGE_COORDINATOR = 1;
