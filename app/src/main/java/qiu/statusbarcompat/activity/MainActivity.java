@@ -14,19 +14,22 @@ import java.util.HashMap;
 import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.fragment.CollapsingToolbarFragment;
 import qiu.statusbarcompat.fragment.CommonFragment;
-import qiu.statusbarcompat.fragment.CoordinatorFragment;
+import qiu.statusbarcompat.fragment.DrawerFragment;
+import qiu.statusbarcompat.fragment.TranslucentFragment;
 
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
     public static final int DEFAULT_COLOR = Color.parseColor("#319bd2");
 
     public static final int PAGE_COMMON = 0;
-    public static final int PAGE_COORDINATOR = 1;
-    public static final int PAGE_COLLAPSING_TOOLBAR = 2;
+    public static final int PAGE_TRANSLUCENT = 1;
+    public static final int PAGE_COORDINATOR = 2;
+    public static final int PAGE_COLLAPSING_TOOLBAR = 3;
 
     private HashMap<Integer,Fragment> fragments = new HashMap<>();
 
     private RadioButton mCommon;
+    private RadioButton mTranslucent;
     private RadioButton mCoordinator;
     private RadioButton mCollapsingToolbar;
     private int fragmentContentId = R.id.container;
@@ -38,11 +41,14 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         setContentView(R.layout.activity_main);
 
         fragments.put(PAGE_COMMON, new CommonFragment());
-        fragments.put(PAGE_COORDINATOR, new CoordinatorFragment());
+        fragments.put(PAGE_TRANSLUCENT, new TranslucentFragment());
+        fragments.put(PAGE_COORDINATOR, new DrawerFragment());
         fragments.put(PAGE_COLLAPSING_TOOLBAR, new CollapsingToolbarFragment());
 
         mCommon = (RadioButton) findViewById(R.id.common);
         mCommon.setOnCheckedChangeListener(this);
+        mTranslucent = (RadioButton) findViewById(R.id.translucent);
+        mTranslucent.setOnCheckedChangeListener(this);
         mCoordinator = (RadioButton) findViewById(R.id.coordinator);
         mCoordinator.setOnCheckedChangeListener(this);
         mCollapsingToolbar = (RadioButton) findViewById(R.id.collapsing_toolbar);
@@ -80,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             case PAGE_COMMON:
                 button = mCommon;
                 break;
+            case PAGE_TRANSLUCENT:
+                button = mTranslucent;
+                break;
             case PAGE_COORDINATOR:
                 button = mCoordinator;
                 break;
@@ -101,12 +110,19 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (buttonView.getId() == R.id.common) {
-            changeTab(PAGE_COMMON);
-        } else if (buttonView.getId() == R.id.coordinator) {
-            changeTab(PAGE_COORDINATOR);
-        } else {
-            changeTab(PAGE_COLLAPSING_TOOLBAR);
+        switch (buttonView.getId()) {
+            case R.id.common:
+                changeTab(PAGE_COMMON);
+                break;
+            case R.id.translucent:
+                changeTab(PAGE_TRANSLUCENT);
+                break;
+            case R.id.coordinator:
+                changeTab(PAGE_COORDINATOR);
+                break;
+            default:
+                changeTab(PAGE_COLLAPSING_TOOLBAR);
+                break;
         }
     }
 }

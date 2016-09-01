@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +19,8 @@ import android.widget.FrameLayout;
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class StatusBarCompatKitKat {
 
-    private static final String TAG = "!23";
-
-    /**
-     * 设置颜色: DecorView + 设置 paddingTop + 设置 flag
-     */
     private static final int TYPE_SET_STATUS_BAR = 0;
-    /**
-     * 设置颜色: DecorView + 移除 paddingTop + 设置 flag
-     */
     private static final int TYPE_SET_STATUS_BAR_WITH_COLLAPSING = 1;
-    /**
-     * 设置颜色: DecorView + 移除 paddingTop + 设置 flag
-     */
     private static final int TYPE_TRANSLUCENT_STATUS_BAR = 2;
 
     //Get status bar height
@@ -52,7 +40,6 @@ public class StatusBarCompatKitKat {
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
         View mContentChild = mContentView.getChildAt(0);
-        Log.e(TAG, "setStatusBarColor: " + mContentChild + " fit: " + mContentChild.getFitsSystemWindows()  + " flag: " + mDecorView.getTag()) ;
 
         if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Integer) {
             View mStatusBarView = mDecorView.getChildAt(0);
@@ -84,7 +71,6 @@ public class StatusBarCompatKitKat {
             mDecorView.addView(mStatusBarView, 0);
             mDecorView.setTag(TYPE_SET_STATUS_BAR);
         }
-        Log.e(TAG, "setStatusBarColor: " + mContentChild + " fit: " + mContentChild.getFitsSystemWindows()  + " flag: " + mDecorView.getTag()) ;
     }
 
     private static void addMarginTopToContentChild(View mContentChild, int margin) {
@@ -122,7 +108,6 @@ public class StatusBarCompatKitKat {
         View mContentChild = mContentView.getChildAt(0);
 
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
-        Log.e(TAG, "setStatusBarColorWithCollapsingToolbar: " + mContentChild + " fit: " + mContentChild.getFitsSystemWindows()  + " flag: " + mDecorView.getTag()) ;
         if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Integer) {
             View mStatusBarView = mDecorView.getChildAt(0);
             if (mStatusBarView != null) {
@@ -143,7 +128,6 @@ public class StatusBarCompatKitKat {
             mDecorView.addView(mStatusBarView, 0);
             mDecorView.setTag(TYPE_SET_STATUS_BAR_WITH_COLLAPSING);
         }
-        Log.e(TAG, "setStatusBarColorWithCollapsingToolbar: " + mContentChild + " fit: " + mContentChild.getFitsSystemWindows()  + " flag: " + mDecorView.getTag()) ;
 
     }
 
@@ -155,7 +139,6 @@ public class StatusBarCompatKitKat {
 
         int statusBarHeight = getStatusBarHeight(activity);
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
-        Log.e(TAG, "translucentStatusBar: " + mContentChild + " fit: " + mContentChild.getFitsSystemWindows()  + " flag: " + mDecorView.getTag()) ;
 
         //set child View not fill the system window
         if (mContentChild != null) {
@@ -173,7 +156,6 @@ public class StatusBarCompatKitKat {
                 mDecorView.setTag(TYPE_TRANSLUCENT_STATUS_BAR);
             }
         }
-        Log.e(TAG, "translucentStatusBar: " + mContentChild + " fit: " + mContentChild.getFitsSystemWindows()  + " flag: " + mDecorView.getTag()) ;
 
     }
 }

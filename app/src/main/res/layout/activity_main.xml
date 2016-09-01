@@ -27,6 +27,15 @@
             android:layout_height="match_parent"/>
 
         <RadioButton
+            android:id="@+id/translucent"
+            android:text="Translucent"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <RadioButton
             android:id="@+id/coordinator"
             android:text="Coordinator"
             android:button="@null"
@@ -37,7 +46,7 @@
 
         <RadioButton
             android:id="@+id/collapsing_toolbar"
-            android:text="CollapsingToolbar"
+            android:text="Collapsing\nToolbar"
             android:button="@null"
             android:gravity="center"
             android:layout_weight="1"
