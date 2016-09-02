@@ -38,11 +38,11 @@ public class StatusBarCompat {
         }
     }
 
-    public static void setStatusBarColorWithCollapsingToolbar(Activity activity, int statusColor) {
+    public static void setStatusBarColorForCollapsingToolbar(Activity activity, int statusColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StatusBarCompatLollipop.setStatusBarColor(activity, statusColor);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            StatusBarCompatKitKat.setStatusBarColorWithCollapsingToolbar(activity, statusColor);
+            StatusBarCompatKitKat.setStatusBarColorForCollapsingToolbar(activity, statusColor);
         }
     }
 

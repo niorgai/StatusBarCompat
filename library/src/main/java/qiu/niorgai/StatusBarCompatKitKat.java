@@ -99,7 +99,7 @@ public class StatusBarCompatKitKat {
         }
     }
 
-    public static void setStatusBarColorWithCollapsingToolbar(Activity activity, int statusColor) {
+    public static void setStatusBarColorForCollapsingToolbar(Activity activity, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);

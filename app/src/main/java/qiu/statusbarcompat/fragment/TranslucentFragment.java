@@ -59,6 +59,7 @@ public class TranslucentFragment extends Fragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             StatusBarCompat.translucentStatusBar(getActivity(), isHide);
+            isHide = !isHide;
         }
     }
 }

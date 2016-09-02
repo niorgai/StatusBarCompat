@@ -35,14 +35,14 @@ public class CollapsingToolbarFragment extends Fragment {
         setHasOptionsMenu(true);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        StatusBarCompat.setStatusBarColorWithCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
+        StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            StatusBarCompat.setStatusBarColorWithCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
+            StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
         }
     }
 }
