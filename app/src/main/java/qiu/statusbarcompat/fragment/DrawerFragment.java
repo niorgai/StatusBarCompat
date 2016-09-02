@@ -14,7 +14,7 @@ import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 
 /**
- *
+ * Test for DrawerLayout and CoordinatorLayout
  */
 public class DrawerFragment extends Fragment {
 

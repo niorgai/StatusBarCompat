@@ -14,6 +14,7 @@ import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.activity.MainActivity;
 
 /**
+ * Compat CollapsingToolbarLayout
  * Created by qiu on 7/27/16.
  */
 public class CollapsingToolbarFragment extends Fragment {

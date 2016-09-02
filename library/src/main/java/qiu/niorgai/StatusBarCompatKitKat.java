@@ -140,7 +140,6 @@ public class StatusBarCompatKitKat {
         int statusBarHeight = getStatusBarHeight(activity);
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
 
-        //set child View not fill the system window
         if (mContentChild != null) {
             ViewCompat.setFitsSystemWindows(mContentChild, false);
         }

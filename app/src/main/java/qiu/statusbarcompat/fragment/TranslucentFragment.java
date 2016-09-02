@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 
+/**
+ * Test for translucent
+ */
 public class TranslucentFragment extends Fragment {
 
     private boolean isHide = false;

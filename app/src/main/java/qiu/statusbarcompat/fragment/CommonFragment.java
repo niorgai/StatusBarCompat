@@ -12,6 +12,9 @@ import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.activity.MainActivity;
 
+/**
+ * Common Layout, test for setStatusBarColor
+ */
 public class CommonFragment extends Fragment {
 
     public CommonFragment() {
@@ -27,6 +30,7 @@ public class CommonFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
         SeekBar seekBar = (SeekBar) view.findViewById(R.id.seek_bar);
 
 
