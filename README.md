@@ -57,7 +57,7 @@ The most feature is **you can toggle `setStatusBarColor` and `translucentStatusB
 	StatusBarCompat.setStatusBarColorForCollapsingToolbar(Activity activity, int color);
 	
 ```
-	
+
 # How to use
 
 1. Use it after call `setContentView` 
@@ -110,7 +110,7 @@ These problem only show in SDK above 21:
     	StatusBarCompat.setStatusBarColorForCollapsingToolbar(Activity activity, int color);
 	
 ```
-	
+
 # 怎么使用
 1. 在 `setContentView` 方法调用后再设置.
 2. 如果使用了全屏 Activity ,记得调用`StatusBarCompat.translucentStatusBar(activity);`
