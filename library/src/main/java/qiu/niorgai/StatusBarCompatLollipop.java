@@ -22,6 +22,9 @@ import android.view.WindowManager;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class StatusBarCompatLollipop {
 
+    /**
+     * set StatusBarColor
+     */
     public static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
 
@@ -44,6 +47,10 @@ public class StatusBarCompatLollipop {
         }
     }
 
+    /**
+     * translucentStatusBar(full-screen)
+     * @param hideStatusBarBackground hide statusBar's shadow
+     */
     public static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
         Window window = activity.getWindow();
 
@@ -72,6 +79,9 @@ public class StatusBarCompatLollipop {
         }
     }
 
+    /**
+     * compat for CollapsingToolbarLayout
+     */
     public static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
                                                              Toolbar toolbar, int statusColor) {
         Window window = activity.getWindow();

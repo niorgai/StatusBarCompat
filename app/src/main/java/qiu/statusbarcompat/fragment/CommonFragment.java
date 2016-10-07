@@ -1,5 +1,6 @@
 package qiu.statusbarcompat.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,7 @@ public class CommonFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
+        setStatusBar();
         SeekBar seekBar = (SeekBar) view.findViewById(R.id.seek_bar);
 
 
@@ -56,7 +57,12 @@ public class CommonFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
+            setStatusBar();
         }
+    }
+
+    private void setStatusBar() {
+        StatusBarCompat.setStatusBarColor(getActivity(), Color.GREEN);
+        StatusBarCompat.setStatusBarColor(getActivity(), MainActivity.DEFAULT_COLOR);
     }
 }
