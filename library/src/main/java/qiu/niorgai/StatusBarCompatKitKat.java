@@ -4,7 +4,10 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,17 +102,33 @@ public class StatusBarCompatKitKat {
         }
     }
 
-    public static void setStatusBarColorForCollapsingToolbar(Activity activity, int statusColor) {
+    public static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
+                                                              Toolbar toolbar, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
 
-        int statusBarHeight = getStatusBarHeight(activity);
         View mContentChild = mContentView.getChildAt(0);
+        mContentChild.setFitsSystemWindows(false);
+        ((View) appBarLayout.getParent()).setFitsSystemWindows(false);
+        appBarLayout.setFitsSystemWindows(false);
+        collapsingToolbarLayout.setFitsSystemWindows(false);
+        collapsingToolbarLayout.getChildAt(0).setFitsSystemWindows(false);
 
+        toolbar.setFitsSystemWindows(true);
+        if (toolbar.getTag() == null) {
+            CollapsingToolbarLayout.LayoutParams lp = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
+            lp.height += getStatusBarHeight(activity);
+            toolbar.setLayoutParams(lp);
+            toolbar.setTag(true);
+        }
+
+        int statusBarHeight = getStatusBarHeight(activity);
+
+        View mStatusBarView;
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
         if (mDecorView.getTag() != null && mDecorView.getTag() instanceof Integer) {
-            View mStatusBarView = mDecorView.getChildAt(0);
+            mStatusBarView = mDecorView.getChildAt(0);
             if (mStatusBarView != null) {
                 mStatusBarView.setBackgroundColor(statusColor);
             }
@@ -120,15 +139,24 @@ public class StatusBarCompatKitKat {
             }
         } else {
             //add fake status bar view
-            View mStatusBarView = new View(activity);
+            mStatusBarView = new View(activity);
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
             layoutParams.gravity = Gravity.TOP;
             mStatusBarView.setLayoutParams(layoutParams);
             mStatusBarView.setBackgroundColor(statusColor);
-            mDecorView.addView(mStatusBarView, 0);
+            mDecorView.addView(mStatusBarView);
             mDecorView.setTag(TYPE_SET_STATUS_BAR_WITH_COLLAPSING);
         }
-
+        final View statusView = mStatusBarView;
+        ViewCompat.setAlpha(mStatusBarView, 1);
+        statusView.bringToFront();
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                float percentage = (float) Math.abs(verticalOffset) / (float) appBarLayout.getTotalScrollRange();
+                ViewCompat.setAlpha(statusView, percentage);
+            }
+        });
     }
 
     public static void translucentStatusBar(Activity activity) {

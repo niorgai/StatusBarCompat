@@ -1,7 +1,10 @@
 package qiu.statusbarcompat.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +14,6 @@ import android.view.ViewGroup;
 
 import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
-import qiu.statusbarcompat.activity.MainActivity;
 
 /**
  * Compat CollapsingToolbarLayout
@@ -23,6 +25,10 @@ public class CollapsingToolbarFragment extends Fragment {
 
     }
 
+    private AppBarLayout mAppBarLayout;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private Toolbar mToolbar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,16 +39,20 @@ public class CollapsingToolbarFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
+
+        mAppBarLayout = (AppBarLayout) view.findViewById(R.id.appbar);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
+        mCollapsingToolbarLayout.setTitle(getString(R.string.app_name));
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), mAppBarLayout, mCollapsingToolbarLayout, mToolbar, Color.YELLOW);
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), MainActivity.DEFAULT_COLOR);
+            StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), mAppBarLayout, mCollapsingToolbarLayout, mToolbar, Color.YELLOW);
         }
     }
 }
