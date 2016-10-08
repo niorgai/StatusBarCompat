@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class StatusBarCompatKitKat {
 
-    private static final String TAG = "statusBarView";
+    private static final String TAG_FAKE_STATUS_BAR_VIEW = "statusBarView";
     private static final String TAG_MARGIN_ADDED = "marginAdded";
 
     /**
@@ -50,7 +50,7 @@ public class StatusBarCompatKitKat {
         layoutParams.gravity = Gravity.TOP;
         mStatusBarView.setLayoutParams(layoutParams);
         mStatusBarView.setBackgroundColor(statusBarColor);
-        mStatusBarView.setTag(TAG);
+        mStatusBarView.setTag(TAG_FAKE_STATUS_BAR_VIEW);
 
         mDecorView.addView(mStatusBarView);
         return mStatusBarView;
@@ -63,12 +63,9 @@ public class StatusBarCompatKitKat {
         Window window = activity.getWindow();
         ViewGroup mDecorView = (ViewGroup) window.getDecorView();
 
-        for (int count = mDecorView.getChildCount()-1; count >= 0; count--) {
-            View view = mDecorView.getChildAt(count);
-            if (TAG.equals(view.getTag())) {
-                mDecorView.removeView(view);
-                break;
-            }
+        View fakeView = mDecorView.findViewWithTag(TAG_FAKE_STATUS_BAR_VIEW);
+        if (fakeView != null) {
+            mDecorView.removeView(fakeView);
         }
     }
 

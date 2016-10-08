@@ -24,7 +24,7 @@ Add the dependency
 ```groovy
 
 	dependencies {
-	        compile 'com.github.niorgai:StatusBarCompat:1.2.0'
+	        compile 'com.github.niorgai:StatusBarCompat:2.0.0'
 	}
 ```
 
@@ -54,7 +54,8 @@ The most feature is **you can toggle `setStatusBarColor` and `translucentStatusB
 	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
 
 	//set color for CollapsingToolbarLayout
-	StatusBarCompat.setStatusBarColorForCollapsingToolbar(Activity activity, int color);
+	setStatusBarColorForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
+                                                                         Toolbar toolbar, int statusColor)
 	
 ```
 
@@ -107,8 +108,8 @@ These problem only show in SDK above 21:
     	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
 
     	//为 CollapsingToolbarLayout 设置颜色
-    	StatusBarCompat.setStatusBarColorForCollapsingToolbar(Activity activity, int color);
-	
+    	setStatusBarColorForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
+                                                                     Toolbar toolbar, int statusColor)
 ```
 
 # 怎么使用
