@@ -24,7 +24,7 @@ Add the dependency
 ```groovy
 
 	dependencies {
-	        compile 'com.github.niorgai:StatusBarCompat:2.0.0'
+	        compile 'com.github.niorgai:StatusBarCompat:2.1.0'
 	}
 ```
 
@@ -78,9 +78,6 @@ These problem only show in SDK between 19 and 21:
 1. If work with `TabActivity`, It will show a black line in contentView, so you can call `StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)` and the suggest alpha is 112.
 2. If first view is `DrawerLayout`, let its child view set `fitsSystemWindow` to false.
 
-These problem only show in SDK above 21:
-1. Sometime change tab between `translucentStatusBar` and `setStatusBarColorForCollapsingToolbar` in same Activity will make `CollapsingToolBarLayout` don't fitsSystemWindow.
-
 
 # Link:
 1. Blog [Android-translucent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/).
@@ -129,10 +126,6 @@ Demo 只有一个 Activity , 分四个 Tab.
 
 1. 如果用在 TabActivity 上, 会有一条黑线在状态栏下面, 推荐使用 `StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)` 方法, 推荐的透明值为 112.
 2. 如果 layout 中第一个 View 为 DrawerLayout, 那么它的子 View 的 fitsSystemWindow 需要设置为 false.
-
-这些问题仅仅出现在 5.0 上
-
-1. 在同一个 Activity 上, `translucentStatusBar` 和 `setStatusBarColorForCollapsingToolbar` 切换时, 有时候 `CollapsingToolbarLayout` 没有 fitsSystemWindow.
 
 # 更多
 在我的博客[Android-translucent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/)中可以查看更多细节.

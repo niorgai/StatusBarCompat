@@ -45,6 +45,7 @@ public class CollapsingToolbarFragment extends Fragment {
         mCollapsingToolbarLayout.setTitle(getString(R.string.app_name));
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), mAppBarLayout, mCollapsingToolbarLayout, mToolbar, Color.YELLOW);
     }
 

@@ -20,7 +20,7 @@ import android.widget.FrameLayout;
  * Created by qiu on 8/27/16.
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class StatusBarCompatKitKat {
+class StatusBarCompatKitKat {
 
     private static final String TAG_FAKE_STATUS_BAR_VIEW = "statusBarView";
     private static final String TAG_MARGIN_ADDED = "marginAdded";
@@ -107,7 +107,7 @@ public class StatusBarCompatKitKat {
      * 4. addMarginTopToContentChild
      * 5. cancel ContentChild's fitsSystemWindow
      */
-    public static void setStatusBarColor(Activity activity, int statusColor) {
+    static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -131,7 +131,7 @@ public class StatusBarCompatKitKat {
      * 3. removeMarginTopOfContentChild
      * 4. cancel ContentChild's fitsSystemWindow
      */
-    public static void translucentStatusBar(Activity activity) {
+    static void translucentStatusBar(Activity activity) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -153,7 +153,7 @@ public class StatusBarCompatKitKat {
      * 4. removeMarginTopOfContentChild
      * 5. add OnOffsetChangedListener to change statusBarView's alpha
      */
-    public static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
+    static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                              Toolbar toolbar, int statusColor) {
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
