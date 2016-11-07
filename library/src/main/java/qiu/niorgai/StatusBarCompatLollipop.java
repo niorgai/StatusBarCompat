@@ -37,6 +37,10 @@ class StatusBarCompatLollipop {
 
     /**
      * set StatusBarColor
+     *
+     * 1. set Flags to call setStatusBarColor
+     * 2. call setSystemUiVisibility to clear translucentStatusBar's Flag.
+     * 3. set FitsSystemWindows to false
      */
     static void setStatusBarColor(Activity activity, int statusColor) {
         Window window = activity.getWindow();
@@ -56,6 +60,10 @@ class StatusBarCompatLollipop {
 
     /**
      * translucentStatusBar(full-screen)
+     *
+     * 1. set Flags to full-screen
+     * 2. set FitsSystemWindows to false
+     *
      * @param hideStatusBarBackground hide statusBar's shadow
      */
     static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
@@ -81,6 +89,12 @@ class StatusBarCompatLollipop {
 
     /**
      * compat for CollapsingToolbarLayout
+     *
+     * 1. change to full-screen mode(like translucentStatusBar).
+     * 2. set View's FitsSystemWindow to false.
+     * 3. adjust toolbar's height to layout.
+     * 4. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal.
+     * 5. call setStatusBarScrimColor to set Color.
      */
     static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
                                                              Toolbar toolbar, int statusColor) {

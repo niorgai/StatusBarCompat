@@ -101,6 +101,7 @@ class StatusBarCompatKitKat {
 
     /**
      * set StatusBarColor
+     *
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. removeFakeStatusBarViewIfExist
      * 3. addFakeStatusBarView
@@ -126,6 +127,7 @@ class StatusBarCompatKitKat {
 
     /**
      * translucentStatusBar
+     *
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. removeFakeStatusBarViewIfExist
      * 3. removeMarginTopOfContentChild
@@ -147,6 +149,7 @@ class StatusBarCompatKitKat {
 
     /**
      * compat for CollapsingToolbarLayout
+     *
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. set FitsSystemWindows for views.
      * 3. removeFakeStatusBarViewIfExist
