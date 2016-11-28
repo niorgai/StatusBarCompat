@@ -189,6 +189,7 @@ class StatusBarCompatKitKat {
                         statusView.animate().alpha(1f).setDuration(collapsingToolbarLayout.getScrimAnimationDuration()).start();
                     }
                 } else {
+                    statusView.animate().cancel();
                     statusView.setAlpha(0);
                 }
             }

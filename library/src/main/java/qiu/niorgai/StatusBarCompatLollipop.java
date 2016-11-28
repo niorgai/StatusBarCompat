@@ -1,5 +1,6 @@
 package qiu.niorgai;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -93,12 +94,12 @@ class StatusBarCompatLollipop {
      * 1. change to full-screen mode(like translucentStatusBar).
      * 2. set View's FitsSystemWindow to false.
      * 3. adjust toolbar's height to layout.
-     * 4. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal.
-     * 5. call setStatusBarScrimColor to set Color.
+     * 4. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal(now setStatusBarScrimColor is useless).
+     * 5. change statusBarColor by AppBarLayout's offset.
      */
-    static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
-                                                             Toolbar toolbar, int statusColor) {
-        Window window = activity.getWindow();
+    static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
+                                                      Toolbar toolbar, final int statusColor) {
+        final Window window = activity.getWindow();
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -128,6 +129,27 @@ class StatusBarCompatLollipop {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
                 return insets;
+            }
+        });
+        final ValueAnimator animator = ValueAnimator.ofArgb(Color.TRANSPARENT, statusColor)
+                .setDuration(collapsingToolbarLayout.getScrimAnimationDuration());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                window.setStatusBarColor((Integer) animation.getAnimatedValue());
+            }
+        });
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
+                    if (window.getStatusBarColor() == Color.TRANSPARENT && !animator.isRunning()) {
+                        animator.start();
+                    }
+                } else {
+                    animator.end();
+                    window.setStatusBarColor(Color.TRANSPARENT);
+                }
             }
         });
         collapsingToolbarLayout.getChildAt(0).setFitsSystemWindows(false);

@@ -15,7 +15,7 @@ import android.support.v7.widget.Toolbar;
 public class StatusBarCompat {
 
     //Get alpha color
-    private static int calculateStatusBarColor(int color, int alpha) {
+    static int calculateStatusBarColor(int color, int alpha) {
         float a = 1 - alpha / 255f;
         int red = color >> 16 & 0xff;
         int green = color >> 8 & 0xff;
