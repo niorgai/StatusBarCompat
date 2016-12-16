@@ -186,11 +186,14 @@ class StatusBarCompatKitKat {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
                     if (statusView.getAlpha() == 0) {
+                        statusView.animate().cancel();
                         statusView.animate().alpha(1f).setDuration(collapsingToolbarLayout.getScrimAnimationDuration()).start();
                     }
                 } else {
-                    statusView.animate().cancel();
-                    statusView.setAlpha(0);
+                    if (statusView.getAlpha() == 1) {
+                        statusView.animate().cancel();
+                        statusView.animate().alpha(0f).setDuration(collapsingToolbarLayout.getScrimAnimationDuration()).start();
+                    }
                 }
             }
         });

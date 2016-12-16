@@ -124,31 +124,40 @@ class StatusBarCompatLollipop {
             toolbar.setTag(true);
         }
 
-        collapsingToolbarLayout.setFitsSystemWindows(false);
         ViewCompat.setOnApplyWindowInsetsListener(collapsingToolbarLayout, new OnApplyWindowInsetsListener() {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
                 return insets;
             }
         });
-        final ValueAnimator animator = ValueAnimator.ofArgb(Color.TRANSPARENT, statusColor)
-                .setDuration(collapsingToolbarLayout.getScrimAnimationDuration());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                window.setStatusBarColor((Integer) animation.getAnimatedValue());
-            }
-        });
+        collapsingToolbarLayout.setFitsSystemWindows(false);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
-                    if (window.getStatusBarColor() == Color.TRANSPARENT && !animator.isRunning()) {
+                    if (window.getStatusBarColor() == Color.TRANSPARENT) {
+                        ValueAnimator animator = ValueAnimator.ofArgb(Color.TRANSPARENT, statusColor)
+                                .setDuration(collapsingToolbarLayout.getScrimAnimationDuration());
+                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                window.setStatusBarColor((Integer) valueAnimator.getAnimatedValue());
+                            }
+                        });
                         animator.start();
                     }
                 } else {
-                    animator.end();
-                    window.setStatusBarColor(Color.TRANSPARENT);
+                    if (window.getStatusBarColor() == statusColor) {
+                        ValueAnimator animator = ValueAnimator.ofArgb(statusColor, Color.TRANSPARENT)
+                                .setDuration(collapsingToolbarLayout.getScrimAnimationDuration());
+                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                window.setStatusBarColor((Integer) valueAnimator.getAnimatedValue());
+                            }
+                        });
+                        animator.start();
+                    }
                 }
             }
         });

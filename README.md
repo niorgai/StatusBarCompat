@@ -24,7 +24,9 @@ Add the dependency
 ```groovy
 
 	dependencies {
-	        compile 'com.github.niorgai:StatusBarCompat:2.1.1'
+	        compile ('com.github.niorgai:StatusBarCompat:2.1.1', {
+                exclude group: 'com.android.support'
+            })
 	}
 ```
 
