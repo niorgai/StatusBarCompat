@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -181,6 +182,19 @@ class StatusBarCompatKitKat {
         removeFakeStatusBarViewIfExist(activity);
         removeMarginTopOfContentChild(mContentChild, statusBarHeight);
         final View statusView = addFakeStatusBarView(activity, statusColor, statusBarHeight);
+
+        CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();
+        if (behavior != null && behavior instanceof AppBarLayout.Behavior) {
+            int verticalOffset = ((AppBarLayout.Behavior) behavior).getTopAndBottomOffset();
+            if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
+                statusView.setAlpha(1f);
+            } else {
+                statusView.setAlpha(0f);
+            }
+        } else {
+            statusView.setAlpha(0f);
+        }
+
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

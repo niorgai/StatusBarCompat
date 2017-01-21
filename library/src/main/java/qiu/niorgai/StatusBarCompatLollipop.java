@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.WindowInsetsCompat;
@@ -92,10 +93,11 @@ class StatusBarCompatLollipop {
      * compat for CollapsingToolbarLayout
      *
      * 1. change to full-screen mode(like translucentStatusBar).
-     * 2. set View's FitsSystemWindow to false.
-     * 3. adjust toolbar's height to layout.
-     * 4. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal(now setStatusBarScrimColor is useless).
+     * 2. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal(now setStatusBarScrimColor is useless).
+     * 3. set View's FitsSystemWindow to false.
+     * 4. adjust toolbar's height to layout.
      * 5. change statusBarColor by AppBarLayout's offset.
+     * 6. add Listener to change statusBarColor
      */
     static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                       Toolbar toolbar, final int statusColor) {
@@ -105,6 +107,13 @@ class StatusBarCompatLollipop {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.TRANSPARENT);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+        ViewCompat.setOnApplyWindowInsetsListener(collapsingToolbarLayout, new OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                return insets;
+            }
+        });
 
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
         View mChildView = mContentView.getChildAt(0);
@@ -124,12 +133,18 @@ class StatusBarCompatLollipop {
             toolbar.setTag(true);
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(collapsingToolbarLayout, new OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                return insets;
+        CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).getBehavior();
+        if (behavior != null && behavior instanceof AppBarLayout.Behavior) {
+            int verticalOffset = ((AppBarLayout.Behavior) behavior).getTopAndBottomOffset();
+            if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
+                window.setStatusBarColor(statusColor);
+            } else {
+                window.setStatusBarColor(Color.TRANSPARENT);
             }
-        });
+        } else {
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+
         collapsingToolbarLayout.setFitsSystemWindows(false);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
