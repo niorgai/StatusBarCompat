@@ -153,9 +153,10 @@ class StatusBarCompatKitKat {
      *
      * 1. set Window Flag : WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
      * 2. set FitsSystemWindows for views.
-     * 3. removeFakeStatusBarViewIfExist
-     * 4. removeMarginTopOfContentChild
-     * 5. add OnOffsetChangedListener to change statusBarView's alpha
+     * 3. add Toolbar's height, let it layout from top, then add paddingTop to layout normal.
+     * 4. removeFakeStatusBarViewIfExist
+     * 5. removeMarginTopOfContentChild
+     * 6. add OnOffsetChangedListener to change statusBarView's alpha
      */
     static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                              Toolbar toolbar, int statusColor) {
@@ -170,11 +171,13 @@ class StatusBarCompatKitKat {
         collapsingToolbarLayout.setFitsSystemWindows(false);
         collapsingToolbarLayout.getChildAt(0).setFitsSystemWindows(false);
 
-        toolbar.setFitsSystemWindows(true);
+        toolbar.setFitsSystemWindows(false);
         if (toolbar.getTag() == null) {
             CollapsingToolbarLayout.LayoutParams lp = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
-            lp.height += getStatusBarHeight(activity);
+            int statusBarHeight = getStatusBarHeight(activity);
+            lp.height += statusBarHeight;
             toolbar.setLayoutParams(lp);
+            toolbar.setPadding(toolbar.getPaddingLeft(), toolbar.getPaddingTop() + statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
             toolbar.setTag(true);
         }
 

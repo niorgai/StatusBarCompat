@@ -95,7 +95,7 @@ class StatusBarCompatLollipop {
      * 1. change to full-screen mode(like translucentStatusBar).
      * 2. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal(now setStatusBarScrimColor is useless).
      * 3. set View's FitsSystemWindow to false.
-     * 4. adjust toolbar's height to layout.
+     * 4. add Toolbar's height, let it layout from top, then add paddingTop to layout normal.
      * 5. change statusBarColor by AppBarLayout's offset.
      * 6. add Listener to change statusBarColor
      */
@@ -125,11 +125,13 @@ class StatusBarCompatLollipop {
         ((View) appBarLayout.getParent()).setFitsSystemWindows(false);
         appBarLayout.setFitsSystemWindows(false);
 
-        toolbar.setFitsSystemWindows(true);
+        toolbar.setFitsSystemWindows(false);
         if (toolbar.getTag() == null) {
             CollapsingToolbarLayout.LayoutParams lp = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
-            lp.height += getStatusBarHeight(activity);
+            int statusBarHeight = getStatusBarHeight(activity);
+            lp.height += statusBarHeight;
             toolbar.setLayoutParams(lp);
+            toolbar.setPadding(toolbar.getPaddingLeft(), toolbar.getPaddingTop() + statusBarHeight, toolbar.getPaddingRight(), toolbar.getPaddingBottom());
             toolbar.setTag(true);
         }
 

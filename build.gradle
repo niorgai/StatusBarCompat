@@ -30,7 +30,7 @@ ext {
     ]
 
     libs = [
-            supportVersion : "25.1.0"
+            supportVersion : "25.2.0"
     ]
 }
 
