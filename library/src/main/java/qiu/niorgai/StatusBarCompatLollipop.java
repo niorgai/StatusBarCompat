@@ -152,28 +152,12 @@ class StatusBarCompatLollipop {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
-                    if (window.getStatusBarColor() == Color.TRANSPARENT) {
-                        ValueAnimator animator = ValueAnimator.ofArgb(Color.TRANSPARENT, statusColor)
-                                .setDuration(collapsingToolbarLayout.getScrimAnimationDuration());
-                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                                window.setStatusBarColor((Integer) valueAnimator.getAnimatedValue());
-                            }
-                        });
-                        animator.start();
+                    if (window.getStatusBarColor() != statusColor) {
+                        startColorAnimation(window.getStatusBarColor(), statusColor, collapsingToolbarLayout.getScrimAnimationDuration(), window);
                     }
                 } else {
-                    if (window.getStatusBarColor() == statusColor) {
-                        ValueAnimator animator = ValueAnimator.ofArgb(statusColor, Color.TRANSPARENT)
-                                .setDuration(collapsingToolbarLayout.getScrimAnimationDuration());
-                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                                window.setStatusBarColor((Integer) valueAnimator.getAnimatedValue());
-                            }
-                        });
-                        animator.start();
+                    if (window.getStatusBarColor() != Color.TRANSPARENT) {
+                        startColorAnimation(window.getStatusBarColor(), Color.TRANSPARENT, collapsingToolbarLayout.getScrimAnimationDuration(), window);
                     }
                 }
             }
@@ -181,4 +165,26 @@ class StatusBarCompatLollipop {
         collapsingToolbarLayout.getChildAt(0).setFitsSystemWindows(false);
         collapsingToolbarLayout.setStatusBarScrimColor(statusColor);
     }
+
+    /**
+     * use ValueAnimator to change statusBarColor when using collapsingToolbarLayout
+     */
+    static void startColorAnimation(int startColor, int endColor, long duration, final Window window) {
+        if (sAnimator != null) {
+            sAnimator.cancel();
+        }
+        sAnimator = ValueAnimator.ofArgb(startColor, endColor)
+                .setDuration(duration);
+        sAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                if (window != null) {
+                    window.setStatusBarColor((Integer) valueAnimator.getAnimatedValue());
+                }
+            }
+        });
+        sAnimator.start();
+    }
+
+    private static ValueAnimator sAnimator;
 }
