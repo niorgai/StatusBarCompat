@@ -39,18 +39,19 @@ class StatusBarCompatLollipop {
 
     /**
      * set StatusBarColor
-     *
+     * <p>
      * 1. set Flags to call setStatusBarColor
      * 2. call setSystemUiVisibility to clear translucentStatusBar's Flag.
      * 3. set FitsSystemWindows to false
      */
-    static void setStatusBarColor(Activity activity, int statusColor) {
+    static void setStatusBarColor(Activity activity, int statusColor, int lightStatusBarMask) {
         Window window = activity.getWindow();
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(statusColor);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | lightStatusBarMask);
+        window.getDecorView().setSystemUiVisibility(lightStatusBarMask);
 
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
         View mChildView = mContentView.getChildAt(0);
@@ -62,23 +63,24 @@ class StatusBarCompatLollipop {
 
     /**
      * translucentStatusBar(full-screen)
-     *
+     * <p>
      * 1. set Flags to full-screen
      * 2. set FitsSystemWindows to false
      *
      * @param hideStatusBarBackground hide statusBar's shadow
      */
-    static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground) {
+    static void translucentStatusBar(Activity activity, boolean hideStatusBarBackground, int lightStatusBarMask) {
         Window window = activity.getWindow();
 
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         if (hideStatusBarBackground) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(Color.TRANSPARENT);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | lightStatusBarMask);
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | lightStatusBarMask);
+            window.getDecorView().setSystemUiVisibility(lightStatusBarMask);
         }
 
         ViewGroup mContentView = (ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT);
@@ -91,7 +93,7 @@ class StatusBarCompatLollipop {
 
     /**
      * compat for CollapsingToolbarLayout
-     *
+     * <p>
      * 1. change to full-screen mode(like translucentStatusBar).
      * 2. cancel CollapsingToolbarLayout's WindowInsets, let it layout as normal(now setStatusBarScrimColor is useless).
      * 3. set View's FitsSystemWindow to false.
@@ -100,13 +102,14 @@ class StatusBarCompatLollipop {
      * 6. add Listener to change statusBarColor
      */
     static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
-                                                      Toolbar toolbar, final int statusColor) {
+                                                      Toolbar toolbar, final int statusColor, int lightStatusBarMask) {
         final Window window = activity.getWindow();
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.TRANSPARENT);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | lightStatusBarMask);
+        window.getDecorView().setSystemUiVisibility(lightStatusBarMask);
 
         ViewCompat.setOnApplyWindowInsetsListener(collapsingToolbarLayout, new OnApplyWindowInsetsListener() {
             @Override
