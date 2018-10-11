@@ -30,13 +30,14 @@ Add the dependency
 	}
 ```
 
-SDK|KITKAT(19)|LOLLIPOP(21)
----|---|---
- |<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_19.gif" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/status_compat_21.gif" width="320x">
+SDK | KITKAT(19) | LOLLIPOP(21)
+--- | --- | ---
+ | <img src="http://github.com/niorgai/StatusBarCompat/raw/master/screen/status_compat_19.gif" width="320x">|<img src="http://github.com/niorgai/StatusBarCompat/raw/master/screen/status_compat_21.gif" width="320x">
 
-TranslucentStatusBar|SetStatusBarColor
----|---
-<img src="http://7sbqys.com1.z0.glb.clouddn.com/fullScreen.png" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/Toolbar.png" width="320x">
+
+TranslucentStatusBar | SetStatusBarColor
+--- | ---
+<img src="http://github.com/niorgai/StatusBarCompat/raw/master/screen/fullScreen.png" width="320x"> | <img src="http://github.com/niorgai/StatusBarCompat/raw/master/screen/Toolbar.png" width="320x">
 
  
 ---
@@ -89,9 +90,9 @@ These problem only show in SDK between 19 and 21:
 
 透明状态栏只有在 SDK >= 19 (Android 4.4) 才会生效.
 
-透明状态栏|设置状态栏的颜色
----|---
-<img src="http://7sbqys.com1.z0.glb.clouddn.com/fullScreen.png" width="320x">|<img src="http://7sbqys.com1.z0.glb.clouddn.com/Toolbar.png" width="320x">)
+透明状态栏 | 设置状态栏的颜色
+--- | ---
+<img src="http://github.com/niorgai/StatusBarCompat/raw/master/screen/fullScreen.png" width="320x"> | <img src="http://github.com/niorgai/StatusBarCompat/raw/master/screen/Toolbar.png" width="320x">)
  
 这是一个为了兼容处理状态栏的工具类,可以不需要设置不同的`style.xml`文件,最重要的特性就是可以在**不重启 Activity 的情况下切换 `setStatusBarColor` 和 `translucentStatusBar` **. 提供以下 API :
 
@@ -130,7 +131,7 @@ Demo 只有一个 Activity , 分四个 Tab.
 2. 如果 layout 中第一个 View 为 DrawerLayout, 那么它的子 View 的 fitsSystemWindow 需要设置为 false.
 
 # 更多
-在我的博客[Android-translucent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/)中可以查看更多细节.
+在我的博客 [Android-translucent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/) 中可以查看更多细节.
 
 # License
 	
