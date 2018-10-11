@@ -32,12 +32,12 @@ Add the dependency
 
 KITKAT(19) | LOLLIPOP(21)
 --- | ---
-<img src="https://raw.githubusercontent.com/niorgai/StatusBarCompat/master/screen/status_compat_19.gif" width="320x"> | <img src="https://raw.githubusercontent.com/niorgai/StatusBarCompat/master/screen/status_compat_21.gif" width="320x">
+<img src="./screen/status_compat_19.gif" width="320x"> | <img src="./screen/status_compat_21.gif" width="320x">
 
 
 TranslucentStatusBar | SetStatusBarColor
 --- | ---
-<img src="https://raw.githubusercontent.com/niorgai/StatusBarCompat/master/screen/fullScreen.png" width="320x"> | <img src="https://raw.githubusercontent.com/niorgai/StatusBarCompat/master/screen/Toolbar.png" width="320x">
+<img src="./screen/fullScreen.png" width="320x"> | <img src="./screen/Toolbar.png" width="320x">
 
  
 ---
@@ -92,7 +92,7 @@ These problem only show in SDK between 19 and 21:
 
 透明状态栏 | 设置状态栏的颜色
 --- | ---
-<img src="https://raw.githubusercontent.com/niorgai/StatusBarCompat/master/screen/fullScreen.png" width="320x"> | <img src="https://raw.githubusercontent.com/niorgai/StatusBarCompat/master/screen/Toolbar.png" width="320x">
+<img src="./screen/fullScreen.png" width="320x"> | <img src="./screen/Toolbar.png" width="320x">
  
 这是一个为了兼容处理状态栏的工具类,可以不需要设置不同的`style.xml`文件,最重要的特性就是可以在**不重启 Activity 的情况下切换 `setStatusBarColor` 和 `translucentStatusBar` **. 提供以下 API :
 
