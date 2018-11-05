@@ -23,11 +23,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile project(path: ':library')
-    compile "com.android.support:appcompat-v7:${lib.supportVersion}"
-    compile "com.android.support:design:${lib.supportVersion}"
-    compile "com.android.support:support-v4:${lib.supportVersion}"
-    compile "com.android.support:cardview-v7:${lib.supportVersion}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation project(path: ':library')
+    implementation "androidx.appcompat:appcompat:${lib.androidXVersion}"
+    implementation "com.google.android.material:material:${lib.androidXVersion}"
+    implementation "androidx.legacy:legacy-support-v4:${lib.androidXVersion}"
+    implementation "androidx.cardview:cardview:${lib.androidXVersion}"
 }
