@@ -24,7 +24,12 @@ Add the dependency
 ```groovy
 
 	dependencies {
-	        compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
+			// After AndroidX
+	        implementation ('com.github.niorgai:StatusBarCompat:2.2.0', {
+                exclude group: 'com.android.support'
+            })
+            // Before AndroidX
+            compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
                 exclude group: 'com.android.support'
             })
 	}
