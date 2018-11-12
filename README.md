@@ -10,29 +10,27 @@
 Add it in your root build.gradle at the end of repositories:
 
 ```groovy
-
-	allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
 	}
+}
 ```
 	 
 Add the dependency
 
 ```groovy
-
-	dependencies {
-			// After AndroidX
-	        implementation ('com.github.niorgai:StatusBarCompat:2.2.0', {
-                exclude group: 'com.android.support'
-            })
-            // Before AndroidX
-            compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
-                exclude group: 'com.android.support'
-            })
-	}
+dependencies {
+	// After AndroidX
+	implementation ('com.github.niorgai:StatusBarCompat:2.2.0', {
+	    exclude group: 'com.android.support'
+	})
+	// Before AndroidX
+	compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
+	    exclude group: 'com.android.support'
+	})
+}
 ```
 
 KITKAT(19) | LOLLIPOP(21)
@@ -85,7 +83,7 @@ These problem only show in SDK between 19 and 21:
 
 1. If work with `TabActivity`, It will show a black line in contentView, so you can call `StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)` and the suggest alpha is 112.
 2. If first view is `DrawerLayout`, let its child view set `fitsSystemWindow` to false.
-
+3. When use `translucentStatusBar`, the method set `View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN` to Window, so there will be [AndroidBug5497](https://issuetracker.google.com/issues/36911528) if work with softInputKeyboard, try [Workaround](https://github.com/madebycm/AndroidBug5497Workaround) to get help.
 
 # Link:
 1. Blog [Android-translucent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/).
@@ -102,19 +100,18 @@ These problem only show in SDK between 19 and 21:
 这是一个为了兼容处理状态栏的工具类,可以不需要设置不同的`style.xml`文件,最重要的特性就是可以在**不重启 Activity 的情况下切换 `setStatusBarColor` 和 `translucentStatusBar` **. 提供以下 API :
 
 ```java
-	    //设置状态栏的颜色
-    	StatusBarCompat.setStatusBarColor(Activity activity, int color)
-    	//添加alpha值
-    	StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
+//设置状态栏的颜色
+StatusBarCompat.setStatusBarColor(Activity activity, int color)
+//添加alpha值
+StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)
 
-        //透明状态栏
-    	StatusBarCompat.translucentStatusBar(activity);
-    	//SDK >= 21时, 取消状态栏的阴影
-    	StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
+//透明状态栏
+StatusBarCompat.translucentStatusBar(activity);
+//SDK >= 21时, 取消状态栏的阴影
+StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBackground);
 
-    	//为 CollapsingToolbarLayout 设置颜色
-    	setStatusBarColorForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
-                                                                     Toolbar toolbar, int statusColor)
+//为 CollapsingToolbarLayout 设置颜色
+setStatusBarColorForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout, Toolbar toolbar, int statusColor)
 ```
 
 # 怎么使用
@@ -134,6 +131,8 @@ Demo 只有一个 Activity , 分四个 Tab.
 
 1. 如果用在 TabActivity 上, 会有一条黑线在状态栏下面, 推荐使用 `StatusBarCompat.setStatusBarColor(Activity activity, int statusColor, int alpha)` 方法, 推荐的透明值为 112.
 2. 如果 layout 中第一个 View 为 DrawerLayout, 那么它的子 View 的 fitsSystemWindow 需要设置为 false.
+3. 调用 `translucentStatusBar` 方法时, 会给 Window 设置 `View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN`, 这个 Flag 和软键盘一起使用的时候可能会导致 [AndroidBug5497](https://issuetracker.google.com/issues/36911528), 可以尝试使用 [这个方法](https://github.com/madebycm/AndroidBug5497Workaround) 解决.
+
 
 # 更多
 在我的博客 [Android-translucent-status-bar](http://niorgai.github.io/2016/03/20/Android-transulcent-status-bar/) 中可以查看更多细节.
