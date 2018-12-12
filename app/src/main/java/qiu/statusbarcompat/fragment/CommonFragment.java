@@ -2,13 +2,12 @@ package qiu.statusbarcompat.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
+import androidx.annotation.Nullable;
 import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 import qiu.statusbarcompat.activity.MainActivity;
@@ -16,7 +15,7 @@ import qiu.statusbarcompat.activity.MainActivity;
 /**
  * Common Layout, test for setStatusBarColor
  */
-public class CommonFragment extends Fragment {
+public class CommonFragment extends BaseFragment {
 
     public CommonFragment() {
 

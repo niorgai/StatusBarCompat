@@ -2,16 +2,16 @@ package qiu.statusbarcompat.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 
@@ -19,7 +19,7 @@ import qiu.statusbarcompat.R;
  * Compat CollapsingToolbarLayout
  * Created by qiu on 7/27/16.
  */
-public class CollapsingToolbarFragment extends Fragment {
+public class CollapsingToolbarFragment extends BaseFragment {
 
     public CollapsingToolbarFragment() {
 

@@ -14,7 +14,7 @@ import qiu.statusbarcompat.R;
 /**
  * Test for translucent
  */
-public class TranslucentFragment extends Fragment {
+public class TranslucentFragment extends BaseFragment {
 
     private boolean isHide = false;
 

@@ -1,22 +1,21 @@
 package qiu.statusbarcompat.fragment;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import qiu.niorgai.StatusBarCompat;
 import qiu.statusbarcompat.R;
 
 /**
  * Test for DrawerLayout and CoordinatorLayout
  */
-public class DrawerFragment extends Fragment {
+public class DrawerFragment extends BaseFragment {
 
     public DrawerFragment() {
 

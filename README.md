@@ -23,8 +23,9 @@ Add the dependency
 ```groovy
 dependencies {
 	// After AndroidX
-	implementation ('com.github.niorgai:StatusBarCompat:2.2.0', {
-	    exclude group: 'com.android.support'
+	implementation ('com.github.niorgai:StatusBarCompat:2.3.0', {
+	    exclude group: 'androidx.appcompat:appcompat'
+	    exclude group: 'com.google.android.material:material'
 	})
 	// Before AndroidX
 	compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
@@ -46,7 +47,8 @@ TranslucentStatusBar | SetStatusBarColor
 ---
 
 This is a utils for status bar, And you **do not need to** change your `style.xml` file.
-The most feature is **you can toggle `setStatusBarColor` and `translucentStatusBar` without recreate activity**.
+
+The most important feature is **you can toggle `setStatusBarColor` and `translucentStatusBar` without recreate activity**.
 
 ```java
 	//set color for status bar
@@ -63,12 +65,18 @@ The most feature is **you can toggle `setStatusBarColor` and `translucentStatusB
 	setStatusBarColorForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout,
                                                                          Toolbar toolbar, int statusColor)
 	
+	//Change to Light status bar (convert icon and text color to dark, SDK >= 23)
+	changeToLightStatusBar(Activity activity)
+	
+	//Cancel Light status bar (convert icon and text color to light)
+	cancelLightStatusBar(Activity activity)
 ```
 
 # How to use
 
 1. Use it after call `setContentView` 
 2. If use FullScreen Activity, must call `StatusBarCompat.translucentStatusBar(activity);`
+3. If you want to set light status bar, Remember call `changeToLightStatusBar()` at last.
 	
 # About Demo:
 Demo shows One Activity with four Fragments.
@@ -77,6 +85,7 @@ Demo shows One Activity with four Fragments.
 2. TranslucentFragment call `translucentStatusBar` method, when sdk >= 21, button can toggle hide/show statusBar's shadow.
 3. DrawerFragment call `setStatusBarColor` method, show how to compat for DrawerLayout and CoordinatorLayout.
 4. CollapsingFragment call `setStatusBarColorForCollapsingToolbar` method, compat for CollapsingToolbarLayout.
+5. Each Fragment can toggle Light status bar with Checkbox.
 
 ## Issues:
 These problem only show in SDK between 19 and 21:
@@ -112,11 +121,18 @@ StatusBarCompat.translucentStatusBar(Activity activity, boolean hideStatusBarBac
 
 //为 CollapsingToolbarLayout 设置颜色
 setStatusBarColorForCollapsingToolbar(Activity activity, AppBarLayout appBarLayout, CollapsingToolbarLayout collapsingToolbarLayout, Toolbar toolbar, int statusColor)
+
+//SDK >= 23, 将状态栏改为浅色模式(状态栏 icon 和字体会变成深色)
+changeToLightStatusBar(Activity activity)
+	
+//将状态栏改为深色模式(状态栏 icon 和字体会变成浅色, 即默认模式)
+cancelLightStatusBar(Activity activity)
 ```
 
 # 怎么使用
 1. 在 `setContentView` 方法调用后再设置.
-2. 如果使用了全屏 Activity ,记得调用`StatusBarCompat.translucentStatusBar(activity);`
+2. 如果要使用全屏 Activity , 调用 `StatusBarCompat.translucentStatusBar(activity)` .
+3. 如果想让状态栏图标变成深色, 记得**最后**调用 `changeToLightStatusBar(activity)` .
 
 # Demo 说明:
 Demo 只有一个 Activity , 分四个 Tab.
@@ -125,6 +141,7 @@ Demo 只有一个 Activity , 分四个 Tab.
 2. TranslucentFragment 为图片布局, 展示透明状态栏效果, SDK >= 21时, 可以通过按钮显示\隐藏 statusBar 的 shadow, 调用方法为: `translucentStatusBar`.
 3. DrawerFragment 展示 DrawerLayout + CoordinatorLayout, 调用方法为: `setStatusBarColor`.
 4. CollapsingFragment 展示 CollapsingLayout 的适配效果, 调用方法为: `setStatusBarColorForCollapsingToolbar`.
+5. 每个 Fragment 下都可以通过 Checkbox 切换浅色/深色状态栏.
 
 ## 已知问题
 这些问题仅仅出现在 4.4 上

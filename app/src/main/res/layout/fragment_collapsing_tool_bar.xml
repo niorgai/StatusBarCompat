@@ -154,6 +154,17 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <CheckBox
+        android:id="@+id/light_status_bar"
+        android:layout_above="@+id/seek_bar"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="10dp"
+        android:text="Light Status Bar"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_height="wrap_content"
