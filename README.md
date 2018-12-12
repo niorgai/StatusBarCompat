@@ -3,7 +3,7 @@
 
 **Only work for SDK >= 19.**
 
-[Demo Download](http://fir.im/StatusBarCompat)
+[Demo Download](https://www.pgyer.com/IZjM)
 
 # Usage
 
