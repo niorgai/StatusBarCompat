@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import java.lang.ref.WeakReference;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.OnApplyWindowInsetsListener;
@@ -103,7 +105,7 @@ class StatusBarCompatLollipop {
      */
     static void setStatusBarColorForCollapsingToolbar(Activity activity, final AppBarLayout appBarLayout, final CollapsingToolbarLayout collapsingToolbarLayout,
                                                       Toolbar toolbar, final int statusColor) {
-        final Window window = activity.getWindow();
+        Window window = activity.getWindow();
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -150,16 +152,20 @@ class StatusBarCompatLollipop {
         }
 
         collapsingToolbarLayout.setFitsSystemWindows(false);
+        final WeakReference<Window> windowWeakReference = new WeakReference<>(window);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
-                    if (window.getStatusBarColor() != statusColor) {
-                        startColorAnimation(window.getStatusBarColor(), statusColor, collapsingToolbarLayout.getScrimAnimationDuration(), window);
-                    }
-                } else {
-                    if (window.getStatusBarColor() != Color.TRANSPARENT) {
-                        startColorAnimation(window.getStatusBarColor(), Color.TRANSPARENT, collapsingToolbarLayout.getScrimAnimationDuration(), window);
+                final Window weakWindow = windowWeakReference.get();
+                if (weakWindow != null) {
+                    if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
+                        if (weakWindow.getStatusBarColor() != statusColor) {
+                            startColorAnimation(weakWindow.getStatusBarColor(), statusColor, collapsingToolbarLayout.getScrimAnimationDuration(), weakWindow);
+                        }
+                    } else {
+                        if (weakWindow.getStatusBarColor() != Color.TRANSPARENT) {
+                            startColorAnimation(weakWindow.getStatusBarColor(), Color.TRANSPARENT, collapsingToolbarLayout.getScrimAnimationDuration(), weakWindow);
+                        }
                     }
                 }
             }
@@ -171,7 +177,7 @@ class StatusBarCompatLollipop {
     /**
      * use ValueAnimator to change statusBarColor when using collapsingToolbarLayout
      */
-    static void startColorAnimation(int startColor, int endColor, long duration, final Window window) {
+    private static void startColorAnimation(int startColor, int endColor, long duration, final Window window) {
         if (sAnimator != null) {
             sAnimator.cancel();
         }
