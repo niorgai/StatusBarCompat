@@ -23,7 +23,7 @@ Add the dependency
 ```groovy
 dependencies {
 	// After AndroidX
-	implementation ('com.github.niorgai:StatusBarCompat:2.3.2', {
+	implementation ('com.github.niorgai:StatusBarCompat:2.3.3', {
 	    exclude group: 'androidx.appcompat:appcompat'
 	    exclude group: 'com.google.android.material:material'
 	})

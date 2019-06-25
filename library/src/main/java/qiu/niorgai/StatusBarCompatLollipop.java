@@ -156,15 +156,15 @@ class StatusBarCompatLollipop {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                final Window weakWindow = windowWeakReference.get();
+                Window weakWindow = windowWeakReference.get();
                 if (weakWindow != null) {
                     if (Math.abs(verticalOffset) > appBarLayout.getHeight() - collapsingToolbarLayout.getScrimVisibleHeightTrigger()) {
                         if (weakWindow.getStatusBarColor() != statusColor) {
-                            startColorAnimation(weakWindow.getStatusBarColor(), statusColor, collapsingToolbarLayout.getScrimAnimationDuration(), weakWindow);
+                            startColorAnimation(weakWindow.getStatusBarColor(), statusColor, collapsingToolbarLayout.getScrimAnimationDuration(), windowWeakReference);
                         }
                     } else {
                         if (weakWindow.getStatusBarColor() != Color.TRANSPARENT) {
-                            startColorAnimation(weakWindow.getStatusBarColor(), Color.TRANSPARENT, collapsingToolbarLayout.getScrimAnimationDuration(), weakWindow);
+                            startColorAnimation(weakWindow.getStatusBarColor(), Color.TRANSPARENT, collapsingToolbarLayout.getScrimAnimationDuration(), windowWeakReference);
                         }
                     }
                 }
@@ -177,7 +177,7 @@ class StatusBarCompatLollipop {
     /**
      * use ValueAnimator to change statusBarColor when using collapsingToolbarLayout
      */
-    private static void startColorAnimation(int startColor, int endColor, long duration, final Window window) {
+    private static void startColorAnimation(int startColor, int endColor, long duration, final WeakReference<Window> windowWeakReference) {
         if (sAnimator != null) {
             sAnimator.cancel();
         }
@@ -186,6 +186,7 @@ class StatusBarCompatLollipop {
         sAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final Window window = windowWeakReference.get();
                 if (window != null) {
                     window.setStatusBarColor((Integer) valueAnimator.getAnimatedValue());
                 }
